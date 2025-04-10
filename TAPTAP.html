@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>> MR. ROBOT CLICKER _</title>
+    <style>
+        body {
+            background: #000 url('path/to/your/mr-robot-bg.jpg') center center no-repeat;
+            background-size: cover;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7); /* Затемнение фона для читаемости текста */
+            z-index: 0;
+        }
+        .container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1; /* Чтобы элементы были поверх фона */
+        }
+        .glitch-title {
+            font-size: 3em;
+            text-shadow: 0 0 15px #0f0, 0 0 30px #0f0;
+            position: relative;
+            animation: glitch 1s infinite;
+        }
+        .glitch-title::before, .glitch-title::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .glitch-title::before {
+            color: #0f0;
+            animation: glitch-top 1s infinite;
+        }
+        .glitch-title::after {
+            color: #f00;
+            animation: glitch-bottom 1.5s infinite;
+        }
+        .hack-button {
+            background: linear-gradient(45deg, #0f0, #000);
+            border: 3px solid #0f0;
+            color: #0f0;
+            padding: 30px 60px;
+            font-size: 2em;
+            cursor: pointer;
+            text-shadow: 0 0 15px #0f0;
+            transition: all 0.2s;
+            animation: glitch 1.5s infinite;
+        }
+        .hack-button:hover {
+            background: linear-gradient(45deg, #0f0, #000);
+            box-shadow: 0 0 50px #0f0;
+            transform: scale(1.1);
+        }
+        .hack-button:active {
+            transform: scale(0.9);
+            box-shadow: 0 0 100px #0f0;
+        }
+        .tabs {
+            position: absolute;
+            top: 20px;
+            display: flex;
+            gap: 15px;
+        }
+        .tab-button {
+            background: #000;
+            border: 1px solid #0f0;
+            color: #0f0;
+            padding: 8px 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-shadow: 0 0 5px #0f0;
+        }
+        .tab-button:hover {
+            background: #0f0;
+            color: #000;
+            box-shadow: 0 0 15px #0f0;
+            transform: scale(1.05);
+        }
+        .tab-content {
+            display: none;
+            margin-top: 20px;
+        }
+        #main {
+            display: block;
+        }
+        .info-text, .store-title {
+            font-size: 1.2em;
+            text-shadow: 0 0 5px #0f0;
+        }
+        .store-item button {
+            background: #000;
+            border: 1px solid #0f0;
+            color: #0f0;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 5px 0;
+            width: 300px;
+        }
+        .store-item button:hover {
+            background: #0f0;
+            color: #000;
+            box-shadow: 0 0 15px #0f0;
+            transform: scale(1.05);
+        }
+        .store-item button:disabled {
+            background: #333;
+            color: #666;
+            border: 1px solid #666;
+            cursor: not-allowed;
+        }
+        .data-display, .store-data-display {
+            font-size: 1.5em;
+            text-shadow: 0 0 10px #0f0;
+            animation: flicker 3s infinite;
+        }
+        @keyframes glitch {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-3px, 3px); }
+            40% { transform: translate(3px, -3px); }
+        }
+        @keyframes glitch-top {
+            0%, 100% { clip: rect(0, 9999px, 0, 0); }
+            20% { clip: rect(10px, 9999px, 20px, 0); }
+            40% { clip: rect(5px, 9999px, 15px, 0); }
+        }
+        @keyframes glitch-bottom {
+            0%, 100% { clip: rect(0, 9999px, 0, 0); }
+            20% { clip: rect(20px, 9999px, 30px, 0); }
+            40% { clip: rect(15px, 9999px, 25px, 0); }
+        }
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        @keyframes glitchFade {
+            0% { opacity: 0.8; transform: translate(0, 0); }
+            100% { opacity: 0; transform: translate(0, -20px); }
+        }
+    </style>
+</head>
+<body>
+    <audio id="bgMusic" loop>
+        <source src="ost.mp3" type="audio/mp3">
+    </audio>
+    <audio id="clickSound" src="path/to/your/click-sound.mp3"></audio>
+    <audio id="buySound" src="path/to/your/buy-sound.mp3"></audio>
+    <div class="container">
+        <h1 class="glitch-title" data-text=">> MR.ROBOT CLICKER _">>> MR. ROBOT CLICKER _</h1>
+        <p class="data-display">>> DATA: <span id="data">0</span></p>
+        <button class="hack-button" onclick="clickHack()" ontouchstart="clickHack()">>> HACK_</button>
+        <div class="tabs">
+            <button class="tab-button" onclick="showMain()">>> MAIN_</button>
+            <button class="tab-button" onclick="showStore()">>> STORE_</button>
+        </div>
+        <div id="main" class="tab-content">
+            <p class="info-text">>> WELCOME TO FSOCIETY _</p>
+        </div>
+        <div id="store" class="tab-content">
+            <h2 class="store-title">>> STORE _</h2>
+            <p class="store-data-display">>> DATA: <span id="storeData">0</span></p>
+            <div class="store-item">
+                <button id="buyClickUpgradeBtn" onclick="buyClickUpgrade()">>> ELLIOT’S KEYBOARD (10 DATA) +1/КЛИК _</button>
+            </div>
+            <div class="store-item">
+                <button id="buyBotnetBtn" onclick="buyBotnet()">>> BOTNET (50 DATA) +1/СЕК _</button>
+            </div>
+            <div class="store-item">
+                <button id="buyBoostBtn" onclick="buyBoost()">>> OVERCLOCK (100 DATA) x2 НА 30 СЕК _</button>
+            </div>
+            <div class="store-item">
+                <button id="buyEvilPortalBtn" onclick="buyEvilPortal()">>> EVIL PORTAL (200 DATA) +5/КЛИК _</button>
+            </div>
+            <div class="store-item">
+                <button id="buyMetasploitBtn" onclick="buyMetasploit()">>> METASPLOIT (500 DATA) +10/СЕК _</button>
+            </div>
+            <div class="store-item">
+                <button id="buyDdosBtn" onclick="buyDdos()">>> DDOS ATTACK (1000 DATA) x3 НА 20 СЕК _</button>
+            </div>
+            <div class="store-item">
+                <button id="buyRootkitBtn" onclick="buyRootkit()">>> ROOTKIT (2000 DATA) +20/КЛИК _</button>
+            </div>
+            <div class="store-item">
+                <button id="buyTrojanBtn" onclick="buyTrojan()">>> TROJAN (3000 DATA) +50/СЕК _</button>
+            </div>
+            <div class="store-item">
+                <button id="buyZeroDayBtn" onclick="buyZeroDay()">>> ZERO DAY EXPLOIT (5000 DATA) x5 НА 10 СЕК _</button>
+            </div>
+            <div class="store-item">
+                <button id="buyPhishingBtn" onclick="buyPhishing()">>> PHISHING KIT (10000 DATA) +100/КЛИК _</button>
+            </div>
+            <div class="store-item">
+                <button id="buyRansomwareBtn" onclick="buyRansomware()">>> RANSOMWARE (15000 DATA) +200/СЕК _</button>
+            </div>
+            <div class="store-item">
+                <button id="buySqlInjectionBtn" onclick="buySqlInjection()">>> SQL INJECTION (20000 DATA) +500/КЛИК _</button>
+            </div>
+            <div class="store-item">
+                <button id="buyDarknetBtn" onclick="buyDarknet()">>> DARKNET SERVER (30000 DATA) +1000/СЕК _</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Инициализация с проверкой на NaN
+        let data = parseInt(localStorage.getItem('data')) || 0;
+        let clickValue = parseInt(localStorage.getItem('clickValue')) || 1;
+        let autoClick = parseInt(localStorage.getItem('autoClick')) || 0;
+        let boostMultiplier = 1;
+
+        // Проверка на корректность значений
+        if (isNaN(data)) data = 0;
+        if (isNaN(clickValue)) clickValue = 1;
+        if (isNaN(autoClick)) autoClick = 0;
+
+        const dataDisplay = document.getElementById('data');
+        const storeDataDisplay = document.getElementById('storeData');
+        const bgMusic = document.getElementById('bgMusic');
+        const clickSound = document.getElementById('clickSound');
+        const buySound = document.getElementById('buySound');
+
+        const buyClickUpgradeBtn = document.getElementById('buyClickUpgradeBtn');
+        const buyBotnetBtn = document.getElementById('buyBotnetBtn');
+        const buyBoostBtn = document.getElementById('buyBoostBtn');
+        const buyEvilPortalBtn = document.getElementById('buyEvilPortalBtn');
+        const buyMetasploitBtn = document.getElementById('buyMetasploitBtn');
+        const buyDdosBtn = document.getElementById('buyDdosBtn');
+        const buyRootkitBtn = document.getElementById('buyRootkitBtn');
+        const buyTrojanBtn = document.getElementById('buyTrojanBtn');
+        const buyZeroDayBtn = document.getElementById('buyZeroDayBtn');
+        const buyPhishingBtn = document.getElementById('buyPhishingBtn');
+        const buyRansomwareBtn = document.getElementById('buyRansomwareBtn');
+        const buySqlInjectionBtn = document.getElementById('buySqlInjectionBtn');
+        const buyDarknetBtn = document.getElementById('buyDarknetBtn');
+
+        bgMusic.volume = 0.3;
+        bgMusic.play();
+
+        function updateData() {
+            // Проверка на NaN перед обновлением
+            if (isNaN(data)) data = 0;
+            if (isNaN(clickValue)) clickValue = 1;
+            if (isNaN(autoClick)) autoClick = 0;
+
+            dataDisplay.innerText = Math.floor(data);
+            storeDataDisplay.innerText = Math.floor(data);
+            localStorage.setItem('data', data);
+            localStorage.setItem('clickValue', clickValue);
+            localStorage.setItem('autoClick', autoClick);
+            updateButtonStates();
+        }
+
+        function updateButtonStates() {
+            buyClickUpgradeBtn.disabled = data < 10;
+            buyBotnetBtn.disabled = data < 50;
+            buyBoostBtn.disabled = data < 100;
+            buyEvilPortalBtn.disabled = data < 200;
+            buyMetasploitBtn.disabled = data < 500;
+            buyDdosBtn.disabled = data < 1000;
+            buyRootkitBtn.disabled = data < 2000;
+            buyTrojanBtn.disabled = data < 3000;
+            buyZeroDayBtn.disabled = data < 5000;
+            buyPhishingBtn.disabled = data < 10000;
+            buyRansomwareBtn.disabled = data < 15000;
+            buySqlInjectionBtn.disabled = data < 20000;
+            buyDarknetBtn.disabled = data < 30000;
+        }
+
+        function clickHack() {
+            data += clickValue * boostMultiplier;
+            updateData();
+            clickSound.play();
+            createGlitchText();
+        }
+
+        function createGlitchText() {
+            const glitch = document.createElement('div');
+            glitch.innerText = `>> ${Math.random().toString(36).substr(2, 5).toUpperCase()}_`;
+            glitch.style.position = 'absolute';
+            glitch.style.left = `${Math.random() * 80 + 10}%`;
+            glitch.style.top = `${Math.random() * 80 + 10}%`;
+            glitch.style.color = '#0f0';
+            glitch.style.textShadow = '0 0 5px #0f0';
+            glitch.style.opacity = '0.8';
+            glitch.style.animation = 'glitchFade 1s ease-out';
+            document.body.appendChild(glitch);
+            setTimeout(() => glitch.remove(), 1000);
+        }
+
+        function buyClickUpgrade() {
+            if (data >= 10) {
+                data -= 10;
+                clickValue += 1;
+                updateData();
+                buySound.play();
+            }
+        }
+
+        function buyBotnet() {
+            if (data >= 50) {
+                data -= 50;
+                autoClick += 1;
+                updateData();
+                buySound.play();
+            }
+        }
+
+        function buyBoost() {
+            if (data >= 100) {
+                data -= 100;
+                boostMultiplier = 2;
+                setTimeout(() => { boostMultiplier = 1; updateData(); }, 30000);
+                updateData();
+                buySound.play();
+            }
+        }
+
+        function buyEvilPortal() {
+            if (data >= 200) {
+                data -= 200;
+                clickValue += 5;
+                updateData();
+                buySound.play();
+            }
+        }
+
+        function buyMetasploit() {
+            if (data >= 500) {
+                data -= 500;
+                autoClick += 10;
+                updateData();
+                buySound.play();
+            }
+        }
+
+        function buyDdos() {
+            if (data >= 1000) {
+                data -= 1000;
+                boostMultiplier = 3;
+                setTimeout(() => { boostMultiplier = 1; updateData(); }, 20000);
+                updateData();
+                buySound.play();
+            }
+        }
+
+        function buyRootkit() {
+            if (data >= 2000) {
+                data -= 2000;
+                clickValue += 20;
+                updateData();
+                buySound.play();
+            }
+        }
+
+        function buyTrojan() {
+            if (data >= 3000) {
+                data -= 3000;
+                autoClick += 50;
+                updateData();
+                buySound.play();
+            }
+        }
+
+        function buyZeroDay() {
+            if (data >= 5000) {
+                data -= 5000;
+                boostMultiplier = 5;
+                setTimeout(() => { boostMultiplier = 1; updateData(); }, 10000);
+                updateData();
+                buySound.play();
+            }
+        }
+
+        function buyPhishing() {
+            if (data >= 10000) {
+                data -= 10000;
+                clickValue += 100;
+                updateData();
+                buySound.play();
+            }
+        }
+
+        function buyRansomware() {
+            if (data >= 15000) {
+                data -= 15000;
+                autoClick += 200;
+                updateData();
+                buySound.play();
+            }
+        }
+
+        function buySqlInjection() {
+            if (data >= 20000) {
+                data -= 20000;
+                clickValue += 500;
+                updateData();
+                buySound.play();
+            }
+        }
+
+        function buyDarknet() {
+            if (data >= 30000) {
+                data -= 30000;
+                autoClick += 1000;
+                updateData();
+                buySound.play();
+            }
+        }
+
+        function showMain() {
+            document.getElementById('main').style.display = 'block';
+            document.getElementById('store').style.display = 'none';
+        }
+
+        function showStore() {
+            document.getElementById('main').style.display = 'none';
+            document.getElementById('store').style.display = 'block';
+            updateData();
+        }
+
+        setInterval(() => {
+            data += autoClick * boostMultiplier;
+            updateData();
+        }, 1000);
+
+        updateData();
+        showMain();
+    </script>
+</body>
+</html>
